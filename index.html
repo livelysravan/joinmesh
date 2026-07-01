@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MESH — Join the Movement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0c;
+    --bone:#edeae1;
+    --acid:#d7ff3f;
+    --concrete:#19191a;
+    --card:#141414;
+    --line:#2c2c2c;
+    --muted:#8c8c87;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--bone);
+    font-family:'Space Grotesk',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .disp{font-family:'Archivo Black',sans-serif; text-transform:uppercase; letter-spacing:-0.02em;}
+  .mono{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.08em;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+
+  /* ===== noise texture ===== */
+  .noise{
+    position:fixed; inset:0; pointer-events:none; z-index:999;
+    opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== nav ===== */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px;
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(10px);
+    background:rgba(11,11,12,0.75);
+  }
+  .logo-mark{font-size:22px; font-weight:900; letter-spacing:-0.03em;}
+  .logo-mark span{color:var(--acid);}
+  .nav-cta{
+    border:1px solid var(--bone); padding:10px 20px; font-size:12px;
+    font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; text-transform:uppercase;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-cta:hover{background:var(--acid); color:var(--bg); border-color:var(--acid);}
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:140px 32px 80px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    position:absolute; inset:0; z-index:0; opacity:0.5;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  }
+  .hero-inner{position:relative; z-index:1; max-width:1240px; margin:0 auto; width:100%;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:12px; color:var(--acid); margin-bottom:28px;
+  }
+  .eyebrow::before{content:''; width:8px; height:8px; background:var(--acid); display:inline-block;}
+  .hero h1{
+    font-size:clamp(3.2rem, 11vw, 9.5rem);
+    line-height:0.86;
+    margin-bottom:32px;
+  }
+  .hero h1 .outline{
+    -webkit-text-stroke:2px var(--bone);
+    color:transparent;
+  }
+  .hero-sub{
+    max-width:560px; font-size:clamp(1.05rem,2vw,1.3rem);
+    color:var(--muted); margin-bottom:48px; font-weight:500;
+  }
+  .hero-sub b{color:var(--bone); font-weight:600;}
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:18px 30px; display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--bone); transition:transform .18s ease, background .18s ease, color .18s ease;
+  }
+  .btn-fill{background:var(--acid); color:var(--bg); border-color:var(--acid);}
+  .btn-fill:hover{transform:translate(-3px,-3px); box-shadow:4px 4px 0 var(--bone);}
+  .btn-ghost:hover{background:var(--bone); color:var(--bg); transform:translate(-3px,-3px); box-shadow:4px 4px 0 var(--acid);}
+  .hero-foot{
+    position:absolute; bottom:32px; left:32px; right:32px;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    font-size:12px; color:var(--muted);
+  }
+  .hero-foot .scroll-tag{writing-mode:vertical-rl;}
+
+  /* ===== ticker ===== */
+  .ticker-band{
+    background:var(--acid); color:var(--bg); overflow:hidden;
+    border-bottom:1px solid var(--line);
+    padding:14px 0;
+  }
+  .ticker-track{
+    display:flex; width:max-content;
+    animation:scroll 26s linear infinite;
+  }
+  .ticker-track span{
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px;
+    letter-spacing:0.08em; text-transform:uppercase; padding:0 24px;
+    white-space:nowrap;
+  }
+  @keyframes scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ===== what is mesh ===== */
+  .statement{
+    padding:120px 32px; border-bottom:1px solid var(--line);
+  }
+  .statement-inner{max-width:1240px; margin:0 auto; display:grid; grid-template-columns:140px 1fr; gap:40px;}
+  .statement-inner .num{font-family:'JetBrains Mono',monospace; color:var(--acid); font-size:14px;}
+  .statement p{
+    font-size:clamp(1.6rem,3.4vw,2.6rem); font-weight:600; line-height:1.25; letter-spacing:-0.01em;
+  }
+  .statement p b{color:var(--acid); font-weight:600;}
+
+  /* ===== events section ===== */
+  .events{padding:110px 32px 140px; border-bottom:1px solid var(--line); position:relative;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    max-width:1240px; margin:0 auto 64px; flex-wrap:wrap; gap:24px;
+  }
+  .section-head h2{font-size:clamp(2.2rem,5vw,4rem);}
+  .section-head p{color:var(--muted); max-width:340px; font-size:14px;}
+
+  .stack-area{
+    max-width:1240px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 380px; gap:80px; align-items:center;
+  }
+  .stack-controls{display:flex; flex-direction:column; gap:28px;}
+  .stack-controls .count{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--muted);}
+  .stack-controls .count b{color:var(--acid);}
+  .arrow-row{display:flex; gap:12px;}
+  .arrow-btn{
+    width:56px; height:56px; border:1px solid var(--bone);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; cursor:pointer; background:transparent; color:var(--bone);
+    transition:background .18s ease, color .18s ease;
+  }
+  .arrow-btn:hover{background:var(--acid); color:var(--bg); border-color:var(--acid);}
+  .hint{font-size:12px; color:var(--muted); max-width:260px; font-family:'JetBrains Mono',monospace; line-height:1.6;}
+
+  .stack-wrap{
+    position:relative; width:100%; max-width:400px; height:520px;
+    justify-self:center;
+  }
+  .card{
+    position:absolute; inset:0;
+    background:var(--card);
+    border:2px solid var(--bone);
+    display:flex; flex-direction:column;
+    user-select:none;
+    will-change:transform;
+    box-shadow:0 30px 60px rgba(0,0,0,0.5);
+  }
+  .card.dragging{transition:none; cursor:grabbing;}
+  .card:not(.dragging){transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s ease;}
+  .card-media{
+    flex:1; position:relative; overflow:hidden;
+    border-bottom:2px dashed var(--line);
+    display:flex; align-items:flex-end;
+  }
+  .card-media .cat-bg{
+    position:absolute; inset:0;
+    background-size:14px 14px;
+  }
+  .card-media .cat-label{
+    position:relative; z-index:1; padding:20px;
+    font-family:'Archivo Black',sans-serif; font-size:15px; color:var(--bg);
+    letter-spacing:-0.01em;
+  }
+  .card-tag{
+    position:absolute; top:16px; right:16px; z-index:2;
+    background:var(--bg); color:var(--acid); border:1px solid var(--acid);
+    font-family:'JetBrains Mono',monospace; font-size:11px; padding:5px 10px; letter-spacing:0.06em;
+  }
+  .card-body{padding:22px 22px 24px;}
+  .card-body h3{font-family:'Archivo Black',sans-serif; font-size:20px; margin-bottom:10px; letter-spacing:-0.01em;}
+  .card-meta{display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);}
+  .card-index{
+    position:absolute; bottom:16px; left:16px; z-index:2;
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--bone); background:rgba(0,0,0,0.5); padding:3px 8px;
+  }
+
+  /* ===== community proof ===== */
+  .proof{padding:120px 32px; border-bottom:1px solid var(--line);}
+  .proof-inner{max-width:1240px; margin:0 auto;}
+  .stat-row{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); margin-bottom:90px;
+  }
+  .stat{background:var(--bg); padding:40px 24px; text-align:left;}
+  .stat .n{font-family:'Archivo Black',sans-serif; font-size:clamp(2.2rem,4.5vw,3.6rem); color:var(--acid); line-height:1;}
+  .stat .l{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px;}
+  .quote{
+    max-width:900px; border-left:3px solid var(--acid); padding-left:36px;
+  }
+  .quote p{font-size:clamp(1.4rem,2.6vw,2rem); font-weight:500; line-height:1.4; margin-bottom:24px;}
+  .quote .attr{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted);}
+
+  /* ===== final cta ===== */
+  .final-cta{
+    padding:140px 32px; text-align:center; position:relative; border-bottom:1px solid var(--line);
+  }
+  .final-cta h2{font-size:clamp(2.6rem,8vw,6rem); margin-bottom:36px;}
+  .final-cta h2 span{color:var(--acid);}
+  .final-cta .cta-row{justify-content:center;}
+
+  /* ===== footer ===== */
+  footer{padding:60px 32px 40px;}
+  .foot-inner{
+    max-width:1240px; margin:0 auto;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;
+  }
+  .foot-col h4{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:0.1em;}
+  .foot-col a{display:block; font-size:14px; margin-bottom:10px; color:var(--bone);}
+  .foot-col a:hover{color:var(--acid);}
+  .foot-bottom{
+    max-width:1240px; margin:60px auto 0; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; font-size:12px; color:var(--muted); flex-wrap:wrap; gap:12px;
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  @media (max-width:860px){
+    .statement-inner{grid-template-columns:1fr; gap:16px;}
+    .stack-area{grid-template-columns:1fr; gap:48px;}
+    .stack-controls{order:2; align-items:center; text-align:center;}
+    .hint{max-width:100%;}
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+    .hero-foot{position:static; margin-top:60px; flex-direction:column; gap:12px; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<nav>
+  <div class="logo-mark">MESH<span>.</span></div>
+  <a href="#join" class="nav-cta">Join</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="eyebrow mono">Bengaluru chapter — live</div>
+    <h1 class="disp">JOIN THE<br><span class="outline">MOVEMENT</span></h1>
+    <p class="hero-sub">MESH is a community built around experiences — runs, nights, talks and gatherings that bring people together. <b>The events aren't the product. You are.</b></p>
+    <div class="cta-row">
+      <a href="#join" class="btn btn-fill">Join the Community →</a>
+      <a href="#events" class="btn btn-ghost">Explore Events</a>
+    </div>
+  </div>
+  <div class="hero-foot mono">
+    <span>joinmesh.in</span>
+    <span class="scroll-tag">scroll ↓</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-band">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-inner">
+    <div class="num mono">01 / What</div>
+    <p>MESH creates spaces where people meet, move, create and belong. <b>Community is the asset —</b> events are just how we build it.</p>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="section-head">
+    <h2 class="disp">Upcoming<br>Experiences</h2>
+    <p class="mono">Swipe through what's on. Runs, nights, talks and everything between.</p>
+  </div>
+
+  <div class="stack-area">
+    <div class="stack-wrap" id="stackWrap"></div>
+
+    <div class="stack-controls">
+      <div class="count mono">Viewing <b id="cardCounter">01</b> / 05</div>
+      <div class="arrow-row">
+        <button class="arrow-btn" id="prevBtn" aria-label="Previous">←</button>
+        <button class="arrow-btn" id="nextBtn" aria-label="Next">→</button>
+      </div>
+      <p class="hint">DRAG A CARD LEFT OR RIGHT — OR USE THE ARROWS — TO CYCLE THROUGH UPCOMING MESH EXPERIENCES.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY PROOF -->
+<section class="proof">
+  <div class="proof-inner">
+    <div class="stat-row">
+      <div class="stat"><div class="n">500+</div><div class="l mono">Members</div></div>
+      <div class="stat"><div class="n">30+</div><div class="l mono">Experiences Run</div></div>
+      <div class="stat"><div class="n">02</div><div class="l mono">Cities</div></div>
+      <div class="stat"><div class="n">4.9</div><div class="l mono">Avg. Rating</div></div>
+    </div>
+    <div class="quote">
+      <p>"I came for one run. Stayed for the people. MESH is the only thing on my calendar I never cancel on."</p>
+      <div class="attr mono">— Early MESH Member, Bengaluru</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="join">
+  <div class="eyebrow mono" style="justify-content:center;">Membership is free — for now</div>
+  <h2 class="disp">READY TO<br><span>MESH</span> IN?</h2>
+  <div class="cta-row">
+    <a href="#" class="btn btn-fill">Join the Community →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-col">
+      <h4 class="mono">Explore</h4>
+      <a href="#events">Events</a>
+      <a href="#">About</a>
+      <a href="#join">Membership</a>
+    </div>
+    <div class="foot-col">
+      <h4 class="mono">Chapters</h4>
+      <a href="#">Bengaluru</a>
+      <a href="#">Kochi — soon</a>
+      <a href="#">Delhi — soon</a>
+    </div>
+    <div class="foot-col">
+      <h4 class="mono">Follow</h4>
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp Community</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 MESH. JOINMESH.IN</span>
+    <span>CONNECT. CREATE. EXPERIENCE.</span>
+  </div>
+</footer>
+
+<script>
+  // ===== ticker content =====
+  const tickerWords = ['COMMUNITY','NOT COMPANY','CONNECTION','CULTURE','BELONGING','MESH RUN','MESH NIGHTS','MESH TALKS'];
+  const tickerTrack = document.getElementById('tickerTrack');
+  const tickerHTML = tickerWords.map(w => `<span>${w} ✦</span>`).join('');
+  tickerTrack.innerHTML = tickerHTML + tickerHTML; // duplicate for seamless loop
+
+  // ===== event card data =====
+  const events = [
+    { cat:'MESH RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', pattern:'repeating-linear-gradient(45deg, #d7ff3f 0, #d7ff3f 8px, #b8e02f 8px, #b8e02f 16px)' },
+    { cat:'MESH NIGHTS', tag:'MUSIC', title:'Warehouse Sessions Vol. 3', date:'18 JUL, 9:00 PM', loc:'Indiranagar', pattern:'repeating-linear-gradient(135deg, #edeae1 0, #edeae1 8px, #c9c6bc 8px, #c9c6bc 16px)' },
+    { cat:'MESH TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', pattern:'repeating-linear-gradient(90deg, #8c8c87 0, #8c8c87 8px, #6d6d69 8px, #6d6d69 16px)' },
+    { cat:'MESH SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', pattern:'repeating-linear-gradient(0deg, #d7ff3f 0, #d7ff3f 6px, #0b0b0c 6px, #0b0b0c 14px)' },
+    { cat:'MESH EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', pattern:'repeating-linear-gradient(60deg, #edeae1 0, #edeae1 6px, #8c8c87 6px, #8c8c87 14px)' },
+  ];
+
+  let order = events.map((_, i) => i); // order[0] = index of front-most card
+
+  const stackWrap = document.getElementById('stackWrap');
+  const counter = document.getElementById('cardCounter');
+
+  function buildCards(){
+    stackWrap.innerHTML = '';
+    order.forEach((eventIndex, pos) => {
+      if(pos > 2) return; // only render top 3 for perf
+      const ev = events[eventIndex];
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.pos = pos;
+      card.innerHTML = `
+        <div class="card-media">
+          <div class="cat-bg" style="background-image:${ev.pattern}"></div>
+          <div class="card-tag mono">${ev.tag}</div>
+          <div class="card-index">${String(pos===0? order.indexOf(eventIndex)+1 : '')}</div>
+          <div class="cat-label">${ev.cat}</div>
+        </div>
+        <div class="card-body">
+          <h3>${ev.title}</h3>
+          <div class="card-meta">
+            <span>${ev.date}</span>
+            <span>${ev.loc}</span>
+          </div>
+        </div>
+      `;
+      setTransform(card, pos, 0);
+      stackWrap.appendChild(card);
+      if(pos === 0) enableDrag(card);
+    });
+    counter.textContent = String((events.length - order.length + order.length) % events.length + 1).padStart(2,'0');
+    counter.textContent = String(getFrontNumber()).padStart(2,'0');
+  }
+
+  function getFrontNumber(){
+    return order[0] + 1;
+  }
+
+  function setTransform(card, pos, dragX){
+    const offsets = [
+      { x:0, y:0, r:0, s:1, o:1 },
+      { x:26, y:14, r:4, s:0.95, o:1 },
+      { x:48, y:26, r:-3, s:0.9, o:0.85 },
+    ];
+    const o = offsets[pos] || offsets[2];
+    const dragRotate = dragX / 18;
+    if(pos === 0){
+      card.style.transform = `translate(${o.x + dragX}px, ${o.y}px) rotate(${o.r + dragRotate}deg) scale(${o.s})`;
+      card.style.opacity = 1 - Math.min(Math.abs(dragX)/500, 0.4);
+    } else {
+      card.style.transform = `translate(${o.x}px, ${o.y}px) rotate(${o.r}deg) scale(${o.s})`;
+      card.style.opacity = o.o;
+    }
+    card.style.zIndex = 10 - pos;
+  }
+
+  function enableDrag(card){
+    let startX = 0, dragX = 0, dragging = false;
+
+    function pointerDown(e){
+      dragging = true;
+      card.classList.add('dragging');
+      startX = (e.touches ? e.touches[0].clientX : e.clientX);
+    }
+    function pointerMove(e){
+      if(!dragging) return;
+      const x = (e.touches ? e.touches[0].clientX : e.clientX);
+      dragX = x - startX;
+      setTransform(card, 0, dragX);
+    }
+    function pointerUp(){
+      if(!dragging) return;
+      dragging = false;
+      card.classList.remove('dragging');
+      const threshold = 110;
+      if(Math.abs(dragX) > threshold){
+        flyOut(card, dragX > 0 ? 1 : -1);
+      } else {
+        setTransform(card, 0, 0);
+      }
+      dragX = 0;
+    }
+
+    card.addEventListener('mousedown', pointerDown);
+    card.addEventListener('touchstart', pointerDown, {passive:true});
+    window.addEventListener('mousemove', pointerMove);
+    window.addEventListener('touchmove', pointerMove, {passive:true});
+    window.addEventListener('mouseup', pointerUp);
+    window.addEventListener('touchend', pointerUp);
+  }
+
+  function flyOut(card, dir){
+    card.style.transition = 'transform .4s cubic-bezier(.2,.8,.2,1), opacity .4s ease';
+    card.style.transform = `translate(${dir * 700}px, ${dir * 60}px) rotate(${dir * 22}deg)`;
+    card.style.opacity = 0;
+    setTimeout(() => {
+      order.push(order.shift());
+      buildCards();
+    }, 380);
+  }
+
+  function goNext(){
+    const front = stackWrap.querySelector('.card[data-pos="0"]');
+    if(front) flyOut(front, -1);
+  }
+  function goPrev(){
+    order.unshift(order.pop());
+    buildCards();
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', goNext);
+  document.getElementById('prevBtn').addEventListener('click', goPrev);
+
+  buildCards();
+</script>
+
+</body>
+</html>
