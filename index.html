@@ -18,13 +18,15 @@
     --muted:#8c8c87;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
   body{
     background:var(--bg);
     color:var(--bone);
     font-family:'Space Grotesk',sans-serif;
     overflow-x:hidden;
+    width:100%;
     -webkit-font-smoothing:antialiased;
+    overscroll-behavior-x:none;
   }
   .disp{font-family:'Archivo Black',sans-serif; text-transform:uppercase; letter-spacing:-0.02em;}
   .mono{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.08em;}
@@ -164,8 +166,9 @@
   .hint{font-size:12px; color:var(--muted); max-width:260px; font-family:'JetBrains Mono',monospace; line-height:1.6;}
 
   .stack-wrap{
-    position:relative; width:100%; max-width:400px; height:520px;
+    position:relative; width:100%; max-width:400px; height:clamp(380px, 62vw, 520px);
     justify-self:center;
+    touch-action:pan-y;
   }
   .card{
     position:absolute; inset:0;
@@ -175,6 +178,7 @@
     user-select:none;
     will-change:transform;
     box-shadow:0 30px 60px rgba(0,0,0,0.5);
+    touch-action:pan-y;
   }
   .card.dragging{transition:none; cursor:grabbing;}
   .card:not(.dragging){transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s ease;}
@@ -228,8 +232,9 @@
   }
   .photo-controls{display:flex; flex-direction:column; gap:28px;}
   .photo-stack-wrap{
-    position:relative; width:100%; max-width:380px; height:460px;
+    position:relative; width:100%; max-width:380px; height:clamp(340px, 58vw, 460px);
     justify-self:center;
+    touch-action:pan-y;
   }
   .photo-card{
     position:absolute; inset:0;
@@ -238,6 +243,7 @@
     will-change:transform;
     user-select:none;
     box-shadow:0 30px 60px rgba(0,0,0,0.55);
+    touch-action:pan-y;
   }
   .photo-card.dragging{transition:none; cursor:grabbing;}
   .photo-card:not(.dragging){transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s ease;}
@@ -285,12 +291,23 @@
   }
 
   @media (max-width:860px){
+    .wrap, .hero, .statement, .events, .proof, .final-cta, footer, nav{padding-left:20px; padding-right:20px;}
     .statement-inner{grid-template-columns:1fr; gap:16px;}
-    .stack-area{grid-template-columns:1fr; gap:48px;}
+    .stack-area{grid-template-columns:1fr; gap:40px;}
     .stack-controls{order:2; align-items:center; text-align:center;}
+    .stack-wrap{order:1;}
+    .photo-stack-area{grid-template-columns:1fr; gap:40px;}
+    .photo-controls{order:2; align-items:center; text-align:center;}
+    .photo-stack-wrap{order:1;}
     .hint{max-width:100%;}
     .stat-row{grid-template-columns:repeat(2,1fr);}
     .hero-foot{position:static; margin-top:60px; flex-direction:column; gap:12px; align-items:flex-start;}
+    .arrow-row{justify-content:center;}
+    .events, .proof{padding-left:20px; padding-right:20px;}
+  }
+
+  @media (max-width:420px){
+    .stack-wrap, .photo-stack-wrap{max-width:100%;}
   }
 </style>
 </head>
@@ -505,24 +522,38 @@
 
     function enableDrag(entry){
       const card = entry.el;
-      let startX = 0, dragX = 0, dragging = false;
+      let startX = 0, startY = 0, dragX = 0, dragging = false, lockedHorizontal = false;
 
       function pointerDown(e){
         dragging = true;
+        lockedHorizontal = false;
         card.classList.add('dragging');
-        startX = (e.touches ? e.touches[0].clientX : e.clientX);
+        const p = e.touches ? e.touches[0] : e;
+        startX = p.clientX;
+        startY = p.clientY;
       }
       function pointerMove(e){
         if(!dragging) return;
-        const x = (e.touches ? e.touches[0].clientX : e.clientX);
-        dragX = x - startX;
+        const p = e.touches ? e.touches[0] : e;
+        const dx = p.clientX - startX;
+        const dy = p.clientY - startY;
+
+        // decide gesture direction once, early — don't fight vertical page scroll
+        if(!lockedHorizontal && Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        if(!lockedHorizontal){
+          lockedHorizontal = Math.abs(dx) > Math.abs(dy);
+          if(!lockedHorizontal){ dragging = false; card.classList.remove('dragging'); return; }
+        }
+        // horizontal drag confirmed — stop the browser's edge-swipe/scroll from taking over
+        if(e.cancelable) e.preventDefault();
+        dragX = dx;
         setPos(entry, 0, dragX);
       }
       function pointerUp(){
         if(!dragging) return;
         dragging = false;
         card.classList.remove('dragging');
-        if(Math.abs(dragX) > 110){
+        if(Math.abs(dragX) > 90){
           cleanup();
           advance(dragX > 0 ? 1 : -1);
         } else {
@@ -542,7 +573,7 @@
       card.addEventListener('mousedown', pointerDown);
       card.addEventListener('touchstart', pointerDown, {passive:true});
       window.addEventListener('mousemove', pointerMove);
-      window.addEventListener('touchmove', pointerMove, {passive:true});
+      window.addEventListener('touchmove', pointerMove, {passive:false});
       window.addEventListener('mouseup', pointerUp);
       window.addEventListener('touchend', pointerUp);
 
