@@ -9,13 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0b0c;
+    --bg:#2b1c1c;
     --bone:#edeae1;
-    --acid:#d7ff3f;
+    --acid:#27c1ca;
     --concrete:#19191a;
-    --card:#141414;
-    --line:#2c2c2c;
-    --muted:#8c8c87;
+    --card:#241717;
+    --line:#4a3535;
+    --muted:#a89191;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
@@ -326,7 +326,7 @@
   <div class="hero-inner">
     <div class="eyebrow mono">Bengaluru chapter — live</div>
     <h1 class="disp">JOIN THE<br><span class="outline">MOVEMENT</span></h1>
-    <p class="hero-sub">MESH is a community built around experiences — runs, nights, talks and gatherings that bring people together. <b></b></p>
+    <p class="hero-sub">MESH is a community built around experiences — runs, nights, talks and gatherings that bring people together. <b>The events aren't the product. You are.</b></p>
     <div class="cta-row">
       <a href="#join" class="btn btn-fill">Join the Community →</a>
       <a href="#events" class="btn btn-ghost">Explore Events</a>
@@ -450,21 +450,21 @@
 
   // ===== event card data =====
   const events = [
-    { cat:'MESH RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', pattern:'repeating-linear-gradient(45deg, #d7ff3f 0, #d7ff3f 8px, #b8e02f 8px, #b8e02f 16px)' },
+    { cat:'MESH RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', pattern:'repeating-linear-gradient(45deg, #27c1ca 0, #27c1ca 8px, #1c9198 8px, #1c9198 16px)' },
     { cat:'MESH NIGHTS', tag:'MUSIC', title:'Warehouse Sessions Vol. 3', date:'18 JUL, 9:00 PM', loc:'Indiranagar', pattern:'repeating-linear-gradient(135deg, #edeae1 0, #edeae1 8px, #c9c6bc 8px, #c9c6bc 16px)' },
-    { cat:'MESH TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', pattern:'repeating-linear-gradient(90deg, #8c8c87 0, #8c8c87 8px, #6d6d69 8px, #6d6d69 16px)' },
-    { cat:'MESH SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', pattern:'repeating-linear-gradient(0deg, #d7ff3f 0, #d7ff3f 6px, #0b0b0c 6px, #0b0b0c 14px)' },
-    { cat:'MESH EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', pattern:'repeating-linear-gradient(60deg, #edeae1 0, #edeae1 6px, #8c8c87 6px, #8c8c87 14px)' },
+    { cat:'MESH TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', pattern:'repeating-linear-gradient(90deg, #a89191 0, #a89191 8px, #7d6a6a 8px, #7d6a6a 16px)' },
+    { cat:'MESH SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', pattern:'repeating-linear-gradient(0deg, #27c1ca 0, #27c1ca 6px, #2b1c1c 6px, #2b1c1c 14px)' },
+    { cat:'MESH EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', pattern:'repeating-linear-gradient(60deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 14px)' },
   ];
 
   // ===== community photo data (swap patterns for real photos later) =====
   const photos = [
-    { title:'Sunrise Run, March', meta:'120 RUNNERS · CUBBON PARK', tag:'MESH RUN', tilt:-2, pattern:'repeating-linear-gradient(45deg, #d7ff3f 0, #d7ff3f 7px, #0b0b0c 7px, #0b0b0c 14px)' },
-    { title:'Warehouse Sessions Vol.1', meta:'300+ HEADS · INDIRANAGAR', tag:'MESH NIGHTS', tilt:3, pattern:'repeating-linear-gradient(120deg, #edeae1 0, #edeae1 7px, #19191a 7px, #19191a 14px)' },
-    { title:'Creator Roundtable', meta:'40 CREATORS · KORAMANGALA', tag:'MESH TALKS', tilt:-3, pattern:'repeating-linear-gradient(75deg, #8c8c87 0, #8c8c87 7px, #0b0b0c 7px, #0b0b0c 14px)' },
-    { title:'Rooftop Mixer, Jan', meta:'80 MEMBERS · HSR LAYOUT', tag:'MESH SOCIAL', tilt:2, pattern:'repeating-linear-gradient(15deg, #d7ff3f 0, #d7ff3f 6px, #19191a 6px, #19191a 13px)' },
-    { title:'Trail Escape, Nandi Hills', meta:'60 EXPLORERS · WEEKEND TRIP', tag:'MESH EXPERIENCES', tilt:-4, pattern:'repeating-linear-gradient(150deg, #edeae1 0, #edeae1 6px, #8c8c87 6px, #8c8c87 13px)' },
-    { title:'MESH Run Anniversary', meta:'200+ RUNNERS · LALBAGH', tag:'MESH RUN', tilt:4, pattern:'repeating-linear-gradient(30deg, #d7ff3f 0, #d7ff3f 8px, #b8e02f 8px, #b8e02f 16px)' },
+    { title:'Sunrise Run, March', meta:'120 RUNNERS · CUBBON PARK', tag:'MESH RUN', tilt:-2, pattern:'repeating-linear-gradient(45deg, #27c1ca 0, #27c1ca 7px, #2b1c1c 7px, #2b1c1c 14px)' },
+    { title:'Warehouse Sessions Vol.1', meta:'300+ HEADS · INDIRANAGAR', tag:'MESH NIGHTS', tilt:3, pattern:'repeating-linear-gradient(120deg, #edeae1 0, #edeae1 7px, #241717 7px, #241717 14px)' },
+    { title:'Creator Roundtable', meta:'40 CREATORS · KORAMANGALA', tag:'MESH TALKS', tilt:-3, pattern:'repeating-linear-gradient(75deg, #a89191 0, #a89191 7px, #2b1c1c 7px, #2b1c1c 14px)' },
+    { title:'Rooftop Mixer, Jan', meta:'80 MEMBERS · HSR LAYOUT', tag:'MESH SOCIAL', tilt:2, pattern:'repeating-linear-gradient(15deg, #27c1ca 0, #27c1ca 6px, #241717 6px, #241717 13px)' },
+    { title:'Trail Escape, Nandi Hills', meta:'60 EXPLORERS · WEEKEND TRIP', tag:'MESH EXPERIENCES', tilt:-4, pattern:'repeating-linear-gradient(150deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 13px)' },
+    { title:'MESH Run Anniversary', meta:'200+ RUNNERS · LALBAGH', tag:'MESH RUN', tilt:4, pattern:'repeating-linear-gradient(30deg, #27c1ca 0, #27c1ca 8px, #1c9198 8px, #1c9198 16px)' },
   ];
 
   // ===== generic swipe-stack engine (persistent cards, no pop) =====
