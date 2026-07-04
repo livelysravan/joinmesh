@@ -113,10 +113,19 @@
   .btn-fill{background:var(--acid); color:var(--bg); border-color:var(--acid);}
   .btn-fill:hover{transform:translate(-3px,-3px); box-shadow:4px 4px 0 var(--bone);}
   .btn-ghost:hover{background:var(--bone); color:var(--bg); transform:translate(-3px,-3px); box-shadow:4px 4px 0 var(--acid);}
+  .hero-people{
+    position:absolute;
+    right:-30px; bottom:0;
+    width:min(760px, 56vw);
+    z-index:1;
+    pointer-events:none;
+  }
+  .hero-people img{width:100%; display:block;}
   .hero-foot{
     position:absolute; bottom:32px; left:32px; right:32px;
     display:flex; justify-content:space-between; align-items:flex-end;
     font-size:12px; color:var(--muted);
+    z-index:2;
   }
   .hero-foot .scroll-tag{writing-mode:vertical-rl;}
 
@@ -310,9 +319,13 @@
     .photo-stack-wrap{order:1;}
     .hint{max-width:100%;}
     .stat-row{grid-template-columns:repeat(2,1fr);}
-    .hero-foot{position:static; margin-top:60px; flex-direction:column; gap:12px; align-items:flex-start;}
     .arrow-row{justify-content:center;}
     .events, .proof{padding-left:20px; padding-right:20px;}
+    .hero-people{
+      left:50%; right:auto; bottom:0;
+      transform:translateX(-50%);
+      width:min(92vw, 480px);
+    }
   }
 
   @media (max-width:420px){
@@ -396,9 +409,12 @@
     <div class="tagline mono">MEET <span>·</span> CONNECT <span>·</span> BELONG</div>
     <p class="hero-sub">Show up. That's the whole idea.</p>
     <div class="cta-row">
-      <a href="#join" class="btn btn-fill">Join Mesh →</a>
+      <a href="#join" class="btn btn-fill">Join the Community →</a>
       <a href="#events" class="btn btn-ghost">See the Events</a>
     </div>
+  </div>
+  <div class="hero-people">
+    <img src="hero-people.png" alt="MESH community">
   </div>
   <div class="hero-foot mono">
     <span>joinmesh.in</span>
