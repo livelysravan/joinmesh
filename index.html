@@ -198,11 +198,17 @@
   }
   .card-media .cat-bg{
     position:absolute; inset:0;
-    background-size:14px 14px;
+    background-size:cover;
+    background-position:center;
+  }
+  .card-media .cat-bg::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0) 55%);
   }
   .card-media .cat-label{
     position:relative; z-index:1; padding:20px;
-    font-family:'Archivo Black',sans-serif; font-size:15px; color:var(--bg);
+    font-family:'Archivo Black',sans-serif; font-size:15px; color:var(--bone);
     letter-spacing:-0.01em;
   }
   .card-tag{
@@ -259,7 +265,8 @@
   .photo-inner{
     height:calc(100% - 92px);
     position:relative; overflow:hidden;
-    background-size:16px 16px;
+    background-size:cover;
+    background-position:center;
   }
   .photo-inner .p-tag{
     position:absolute; top:12px; left:12px;
@@ -310,9 +317,9 @@
     .photo-stack-wrap{order:1;}
     .hint{max-width:100%;}
     .stat-row{grid-template-columns:repeat(2,1fr);}
-    .hero-foot{position:static; margin-top:60px; flex-direction:column; gap:12px; align-items:flex-start;}
     .arrow-row{justify-content:center;}
     .events, .proof{padding-left:20px; padding-right:20px;}
+    .hero-foot{position:static; margin-top:60px; flex-direction:column; gap:12px; align-items:flex-start;}
   }
 
   @media (max-width:420px){
@@ -396,7 +403,7 @@
     <div class="tagline mono">MEET <span>·</span> CONNECT <span>·</span> BELONG</div>
     <p class="hero-sub">Show up. That's the whole idea.</p>
     <div class="cta-row">
-      <a href="#join" class="btn btn-fill">Join Mesh →</a>
+      <a href="#join" class="btn btn-fill">Join the Community →</a>
       <a href="#events" class="btn btn-ghost">See the Events</a>
     </div>
   </div>
@@ -516,22 +523,24 @@
   tickerTrack.innerHTML = tickerHTML + tickerHTML; // duplicate for seamless loop
 
   // ===== event card data =====
+  // ===== UPCOMING EXPERIENCES — put your image files in the same folder as this HTML,
+  // then just change the "img" filename below for each card =====
   const events = [
-    { cat:'RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', pattern:'repeating-linear-gradient(45deg, #529f9a 0, #529f9a 8px, #3c7d79 8px, #3c7d79 16px)' },
-    { cat:'NIGHTS', tag:'MUSIC', title:'Warehouse Sessions Vol. 3', date:'18 JUL, 9:00 PM', loc:'Indiranagar', pattern:'repeating-linear-gradient(135deg, #edeae1 0, #edeae1 8px, #c9c6bc 8px, #c9c6bc 16px)' },
-    { cat:'TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', pattern:'repeating-linear-gradient(90deg, #a89191 0, #a89191 8px, #7d6a6a 8px, #7d6a6a 16px)' },
-    { cat:'SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', pattern:'repeating-linear-gradient(0deg, #529f9a 0, #529f9a 6px, #201917 6px, #201917 14px)' },
-    { cat:'EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', pattern:'repeating-linear-gradient(60deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 14px)' },
+    { cat:'RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', img:'event-run.jpg' },
+    { cat:'NIGHTS', tag:'MUSIC', title:'Warehouse Sessions Vol. 3', date:'18 JUL, 9:00 PM', loc:'Indiranagar', img:'event-nights.jpg' },
+    { cat:'TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', img:'event-talks.jpg' },
+    { cat:'SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', img:'event-social.jpg' },
+    { cat:'EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', img:'event-experiences.jpg' },
   ];
 
-  // ===== community photo data (swap patterns for real photos later) =====
+  // ===== IN THE FRAME (past event photos) — same idea, just point each to your file =====
   const photos = [
-    { title:'Sunrise Run, March', meta:'120 RUNNERS · CUBBON PARK', tag:'RUN', tilt:-2, pattern:'repeating-linear-gradient(45deg, #529f9a 0, #529f9a 7px, #201917 7px, #201917 14px)' },
-    { title:'Warehouse Sessions Vol.1', meta:'300+ HEADS · INDIRANAGAR', tag:'NIGHTS', tilt:3, pattern:'repeating-linear-gradient(120deg, #edeae1 0, #edeae1 7px, #241717 7px, #241717 14px)' },
-    { title:'Creator Roundtable', meta:'40 CREATORS · KORAMANGALA', tag:'TALKS', tilt:-3, pattern:'repeating-linear-gradient(75deg, #a89191 0, #a89191 7px, #201917 7px, #201917 14px)' },
-    { title:'Rooftop Mixer, Jan', meta:'80 MEMBERS · HSR LAYOUT', tag:'SOCIAL', tilt:2, pattern:'repeating-linear-gradient(15deg, #529f9a 0, #529f9a 6px, #241717 6px, #241717 13px)' },
-    { title:'Trail Escape, Nandi Hills', meta:'60 EXPLORERS · WEEKEND TRIP', tag:'EXPERIENCES', tilt:-4, pattern:'repeating-linear-gradient(150deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 13px)' },
-    { title:'MESH Run Anniversary', meta:'200+ RUNNERS · LALBAGH', tag:'RUN', tilt:4, pattern:'repeating-linear-gradient(30deg, #529f9a 0, #529f9a 8px, #3c7d79 8px, #3c7d79 16px)' },
+    { title:'Sunrise Run, March', meta:'120 RUNNERS · CUBBON PARK', tag:'RUN', tilt:-2, img:'photo-run-1.jpg' },
+    { title:'Warehouse Sessions Vol.1', meta:'300+ HEADS · INDIRANAGAR', tag:'NIGHTS', tilt:3, img:'photo-nights-1.jpg' },
+    { title:'Creator Roundtable', meta:'40 CREATORS · KORAMANGALA', tag:'TALKS', tilt:-3, img:'photo-talks-1.jpg' },
+    { title:'Rooftop Mixer, Jan', meta:'80 MEMBERS · HSR LAYOUT', tag:'SOCIAL', tilt:2, img:'photo-social-1.jpg' },
+    { title:'Trail Escape, Nandi Hills', meta:'60 EXPLORERS · WEEKEND TRIP', tag:'EXPERIENCES', tilt:-4, img:'photo-experiences-1.jpg' },
+    { title:'MESH Run Anniversary', meta:'200+ RUNNERS · LALBAGH', tag:'RUN', tilt:4, img:'photo-run-2.jpg' },
   ];
 
   // ===== generic swipe-stack engine (persistent cards, no pop) =====
@@ -721,7 +730,7 @@
     data:events, cardClass:'card',
     renderCard:(ev, dataIndex) => `
       <div class="card-media">
-        <div class="cat-bg" style="background-image:${ev.pattern}"></div>
+        <div class="cat-bg" style="background-image:url('${ev.img}')"></div>
         <div class="card-tag mono">${ev.tag}</div>
         <div class="card-index">${dataIndex+1}</div>
         <div class="cat-label">${ev.cat}</div>
@@ -741,7 +750,7 @@
     wrapId:'photoStackWrap', counterId:'photoCounter', prevBtnId:'photoPrevBtn', nextBtnId:'photoNextBtn',
     data:photos, cardClass:'photo-card',
     renderCard:(p) => `
-      <div class="photo-inner" style="background-image:${p.pattern}">
+      <div class="photo-inner" style="background-image:url('${p.img}')">
         <div class="p-tag">${p.tag}</div>
       </div>
       <div class="photo-caption">
