@@ -85,15 +85,23 @@
   .hero h1{
     font-size:clamp(3.2rem, 11vw, 9.5rem);
     line-height:0.86;
-    margin-bottom:32px;
+    margin-bottom:24px;
   }
   .hero h1 .outline{
     -webkit-text-stroke:2px var(--bone);
     color:transparent;
   }
+  .tagline{
+    font-size:clamp(0.95rem, 1.6vw, 1.15rem);
+    color:var(--acid);
+    letter-spacing:0.15em;
+    margin-bottom:28px;
+    font-weight:500;
+  }
+  .tagline span{color:var(--muted); margin:0 4px;}
   .hero-sub{
-    max-width:560px; font-size:clamp(1.05rem,2vw,1.3rem);
-    color:var(--muted); margin-bottom:48px; font-weight:500;
+    max-width:560px; font-size:clamp(1.1rem,2.2vw,1.4rem);
+    color:var(--bone); margin-bottom:48px; font-weight:600;
   }
   .hero-sub b{color:var(--bone); font-weight:600;}
   .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
@@ -385,10 +393,11 @@
   <div class="hero-inner">
     <div class="eyebrow mono">Bengaluru chapter — live</div>
     <h1 class="disp">JOIN THE<br><span class="outline">MOVEMENT</span></h1>
-    <p class="hero-sub">MESH is a community built around experiences — runs, nights, talks and gatherings that bring people together. <b>The events aren't the product. You are.</b></p>
+    <div class="tagline mono">MEET <span>·</span> CONNECT <span>·</span> BELONG</div>
+    <p class="hero-sub">Show up. That's the whole idea.</p>
     <div class="cta-row">
       <a href="#join" class="btn btn-fill">Join the Community →</a>
-      <a href="#events" class="btn btn-ghost">Explore Events</a>
+      <a href="#events" class="btn btn-ghost">See the Events</a>
     </div>
   </div>
   <div class="hero-foot mono">
@@ -406,7 +415,7 @@
 <section class="statement">
   <div class="statement-inner">
     <div class="num mono">01 / What</div>
-    <p>MESH creates spaces where people meet, move, create and belong. <b>Community is the asset —</b> events are just how we build it.</p>
+    <p>Not an event company. <b>A reason to show up.</b></p>
   </div>
 </section>
 
@@ -414,7 +423,7 @@
 <section class="events" id="events">
   <div class="section-head">
     <h2 class="disp">Upcoming<br>Experiences</h2>
-    <p class="mono">Swipe through what's on. Runs, nights, talks and everything between.</p>
+    <p class="mono">Swipe through what's on.</p>
   </div>
 
   <div class="stack-area">
@@ -426,7 +435,7 @@
         <button class="arrow-btn" id="prevBtn" aria-label="Previous">←</button>
         <button class="arrow-btn" id="nextBtn" aria-label="Next">→</button>
       </div>
-      <p class="hint">DRAG A CARD LEFT OR RIGHT — OR USE THE ARROWS — TO CYCLE THROUGH UPCOMING MESH EXPERIENCES.</p>
+      <p class="hint">DRAG OR TAP THE ARROWS.</p>
     </div>
   </div>
 </section>
@@ -435,21 +444,21 @@
 <section class="proof">
   <div class="proof-inner">
     <div class="stat-row">
-      <div class="stat"><div class="n">500+</div><div class="l mono">Members</div></div>
-      <div class="stat"><div class="n">30+</div><div class="l mono">Experiences Run</div></div>
-      <div class="stat"><div class="n">02</div><div class="l mono">Cities</div></div>
-      <div class="stat"><div class="n">4.9</div><div class="l mono">Avg. Rating</div></div>
+      <div class="stat"><div class="n">200+</div><div class="l mono">Members</div></div>
+      <div class="stat"><div class="n">02</div><div class="l mono">Events Run</div></div>
+      <div class="stat"><div class="n">01</div><div class="l mono">City</div></div>
+      <div class="stat"><div class="n">00</div><div class="l mono">Sponsors</div></div>
     </div>
     <div class="quote">
       <p>"I came for one run. Stayed for the people. MESH is the only thing on my calendar I never cancel on."</p>
-      <div class="attr mono">— Early MESH Member, Bengaluru</div>
+      <div class="attr mono">— MESH Member, Varkala</div>
     </div>
   </div>
 
   <div class="proof-inner photo-section">
     <div class="section-head">
       <h2 class="disp">In The<br>Frame</h2>
-      <p class="mono">A pile of moments from meetups we've already run. Swipe through.</p>
+      <p class="mono">Moments from the ground so far.</p>
     </div>
     <div class="photo-stack-area">
       <div class="photo-controls">
@@ -458,7 +467,7 @@
           <button class="arrow-btn" id="photoPrevBtn" aria-label="Previous">←</button>
           <button class="arrow-btn" id="photoNextBtn" aria-label="Next">→</button>
         </div>
-        <p class="hint">DRAG A PHOTO ASIDE TO FLIP TO THE NEXT ONE. THESE WILL BE REPLACED WITH REAL SHOTS FROM PAST MESH MEETUPS.</p>
+        <p class="hint">DRAG OR TAP THE ARROWS.</p>
       </div>
       <div class="photo-stack-wrap" id="photoStackWrap"></div>
     </div>
@@ -467,8 +476,7 @@
 
 <!-- FINAL CTA -->
 <section class="final-cta" id="join">
-  <div class="eyebrow mono" style="justify-content:center;">Membership is free — for now</div>
-  <h2 class="disp">READY TO<br><span>MESH</span> IN?</h2>
+  <h2 class="disp">JOIN IN.</h2>
   <div class="cta-row">
     <a href="#" class="btn btn-fill">Join the Community →</a>
   </div>
@@ -496,34 +504,34 @@
   </div>
   <div class="foot-bottom">
     <span>© 2026 MESH. JOINMESH.IN</span>
-    <span>CONNECT. CREATE. EXPERIENCE.</span>
+    <span>MEET. CONNECT. BELONG.</span>
   </div>
 </footer>
 
 <script>
   // ===== ticker content =====
-  const tickerWords = ['COMMUNITY','NOT COMPANY','CONNECTION','CULTURE','BELONGING','MESH RUN','MESH NIGHTS','MESH TALKS'];
+  const tickerWords = ['RUN CLUB','MUSIC NIGHTS','MEETUPS','TALKS','POP-UPS','+ MUCH MORE'];
   const tickerTrack = document.getElementById('tickerTrack');
   const tickerHTML = tickerWords.map(w => `<span>${w} ✦</span>`).join('');
   tickerTrack.innerHTML = tickerHTML + tickerHTML; // duplicate for seamless loop
 
   // ===== event card data =====
   const events = [
-    { cat:'MESH RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', pattern:'repeating-linear-gradient(45deg, #529f9a 0, #529f9a 8px, #3c7d79 8px, #3c7d79 16px)' },
-    { cat:'MESH NIGHTS', tag:'MUSIC', title:'Warehouse Sessions Vol. 3', date:'18 JUL, 9:00 PM', loc:'Indiranagar', pattern:'repeating-linear-gradient(135deg, #edeae1 0, #edeae1 8px, #c9c6bc 8px, #c9c6bc 16px)' },
-    { cat:'MESH TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', pattern:'repeating-linear-gradient(90deg, #a89191 0, #a89191 8px, #7d6a6a 8px, #7d6a6a 16px)' },
-    { cat:'MESH SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', pattern:'repeating-linear-gradient(0deg, #529f9a 0, #529f9a 6px, #201917 6px, #201917 14px)' },
-    { cat:'MESH EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', pattern:'repeating-linear-gradient(60deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 14px)' },
+    { cat:'RUN', tag:'FITNESS', title:'Sunrise 5K — Cubbon Park', date:'12 JUL, 6:00 AM', loc:'Bengaluru', pattern:'repeating-linear-gradient(45deg, #529f9a 0, #529f9a 8px, #3c7d79 8px, #3c7d79 16px)' },
+    { cat:'NIGHTS', tag:'MUSIC', title:'Warehouse Sessions Vol. 3', date:'18 JUL, 9:00 PM', loc:'Indiranagar', pattern:'repeating-linear-gradient(135deg, #edeae1 0, #edeae1 8px, #c9c6bc 8px, #c9c6bc 16px)' },
+    { cat:'TALKS', tag:'WORKSHOP', title:'Creators in Conversation', date:'22 JUL, 5:30 PM', loc:'Koramangala', pattern:'repeating-linear-gradient(90deg, #a89191 0, #a89191 8px, #7d6a6a 8px, #7d6a6a 16px)' },
+    { cat:'SOCIAL', tag:'MEETUP', title:'Rooftop Community Mixer', date:'26 JUL, 7:00 PM', loc:'HSR Layout', pattern:'repeating-linear-gradient(0deg, #529f9a 0, #529f9a 6px, #201917 6px, #201917 14px)' },
+    { cat:'EXPERIENCES', tag:'POP-UP', title:'Weekend Trail Escape', date:'02 AUG, ALL DAY', loc:'Nandi Hills', pattern:'repeating-linear-gradient(60deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 14px)' },
   ];
 
   // ===== community photo data (swap patterns for real photos later) =====
   const photos = [
-    { title:'Sunrise Run, March', meta:'120 RUNNERS · CUBBON PARK', tag:'MESH RUN', tilt:-2, pattern:'repeating-linear-gradient(45deg, #529f9a 0, #529f9a 7px, #201917 7px, #201917 14px)' },
-    { title:'Warehouse Sessions Vol.1', meta:'300+ HEADS · INDIRANAGAR', tag:'MESH NIGHTS', tilt:3, pattern:'repeating-linear-gradient(120deg, #edeae1 0, #edeae1 7px, #241717 7px, #241717 14px)' },
-    { title:'Creator Roundtable', meta:'40 CREATORS · KORAMANGALA', tag:'MESH TALKS', tilt:-3, pattern:'repeating-linear-gradient(75deg, #a89191 0, #a89191 7px, #201917 7px, #201917 14px)' },
-    { title:'Rooftop Mixer, Jan', meta:'80 MEMBERS · HSR LAYOUT', tag:'MESH SOCIAL', tilt:2, pattern:'repeating-linear-gradient(15deg, #529f9a 0, #529f9a 6px, #241717 6px, #241717 13px)' },
-    { title:'Trail Escape, Nandi Hills', meta:'60 EXPLORERS · WEEKEND TRIP', tag:'MESH EXPERIENCES', tilt:-4, pattern:'repeating-linear-gradient(150deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 13px)' },
-    { title:'MESH Run Anniversary', meta:'200+ RUNNERS · LALBAGH', tag:'MESH RUN', tilt:4, pattern:'repeating-linear-gradient(30deg, #529f9a 0, #529f9a 8px, #3c7d79 8px, #3c7d79 16px)' },
+    { title:'Sunrise Run, March', meta:'120 RUNNERS · CUBBON PARK', tag:'RUN', tilt:-2, pattern:'repeating-linear-gradient(45deg, #529f9a 0, #529f9a 7px, #201917 7px, #201917 14px)' },
+    { title:'Warehouse Sessions Vol.1', meta:'300+ HEADS · INDIRANAGAR', tag:'NIGHTS', tilt:3, pattern:'repeating-linear-gradient(120deg, #edeae1 0, #edeae1 7px, #241717 7px, #241717 14px)' },
+    { title:'Creator Roundtable', meta:'40 CREATORS · KORAMANGALA', tag:'TALKS', tilt:-3, pattern:'repeating-linear-gradient(75deg, #a89191 0, #a89191 7px, #201917 7px, #201917 14px)' },
+    { title:'Rooftop Mixer, Jan', meta:'80 MEMBERS · HSR LAYOUT', tag:'SOCIAL', tilt:2, pattern:'repeating-linear-gradient(15deg, #529f9a 0, #529f9a 6px, #241717 6px, #241717 13px)' },
+    { title:'Trail Escape, Nandi Hills', meta:'60 EXPLORERS · WEEKEND TRIP', tag:'EXPERIENCES', tilt:-4, pattern:'repeating-linear-gradient(150deg, #edeae1 0, #edeae1 6px, #a89191 6px, #a89191 13px)' },
+    { title:'MESH Run Anniversary', meta:'200+ RUNNERS · LALBAGH', tag:'RUN', tilt:4, pattern:'repeating-linear-gradient(30deg, #529f9a 0, #529f9a 8px, #3c7d79 8px, #3c7d79 16px)' },
   ];
 
   // ===== generic swipe-stack engine (persistent cards, no pop) =====
