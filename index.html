@@ -1323,7 +1323,7 @@
 <!-- ============================================================ -->
 <nav id="nav">
   <div class="logo-mark">
-    <img src="meshbg.png" alt="MESH Logo" />
+    <img src="logo.png" alt="MESH Logo" />
   </div>
   <a href="https://wa.me/919778423214?text=Hey%20MESH!%20Count%20me%20in." target="_blank" rel="noopener noreferrer" class="nav-cta">Join</a>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -1339,7 +1339,7 @@
   <a href="#about">About</a>
   <a href="#events">Events</a>
   <a href="#community">Community</a>
-  <a href="https://wa.me/919778423214?text=Hey%20MESH!%20Count%20me%20in." target="_blank" rel="noopener noreferrer" class="menu-cta">JOIN MESH →</a>
+  <a href="https://wa.me/919778423214?text=Hey%20MESH!%20Count%20me%20in." target="_blank" rel="noopener noreferrer" class="menu-cta">Join WhatsApp →</a>
   <div class="menu-footer">© 2026 MESH · joinmesh.in</div>
 </div>
 
@@ -1488,7 +1488,7 @@
     </svg>
   </div>
 
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="meshvideo-poster.jpg">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto" poster="meshvideo-poster.jpg">
     <source src="meshvideo.mp4" type="video/mp4" />
   </video>
 
@@ -1820,22 +1820,62 @@
   })();
 
   // ============================================================
-  // 2. VIDEO FADE-IN
+  // 2. VIDEO — FORCE PLAY ON MOBILE (FIXED)
   // ============================================================
   (function() {
     const video = document.getElementById('heroVideo');
-    if (video) {
-      video.addEventListener('canplaythrough', function() {
-        this.classList.add('ready');
-        this.play().catch(() => {});
-      });
-      setTimeout(function() {
-        if (!video.classList.contains('ready')) {
-          video.classList.add('ready');
+    if (!video) return;
+
+    // Set initial state
+    video.style.opacity = '0';
+    
+    // When video can play, show it
+    video.addEventListener('canplaythrough', function() {
+      this.classList.add('ready');
+      this.style.opacity = '0.6';
+      this.play().catch(() => {});
+      console.log('🎬 Video ready and playing');
+    });
+
+    // Fallback: show after 3s even if not ready
+    setTimeout(function() {
+      if (!video.classList.contains('ready')) {
+        video.classList.add('ready');
+        video.style.opacity = '0.6';
+        video.play().catch(() => {});
+        console.log('🎬 Video fallback triggered');
+      }
+    }, 3000);
+
+    // FORCE PLAY ON ANY USER INTERACTION
+    function forcePlay() {
+      video.play().catch(() => {});
+    }
+    
+    // Mobile touch events
+    document.addEventListener('touchstart', forcePlay, { passive: true });
+    document.addEventListener('click', forcePlay, { passive: true });
+    
+    // Also try on scroll (first scroll only)
+    let scrollTried = false;
+    window.addEventListener('scroll', function() {
+      if (!scrollTried) {
+        scrollTried = true;
+        video.play().catch(() => {});
+      }
+    }, { passive: true, once: true });
+
+    // Intersection Observer — play when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
           video.play().catch(() => {});
         }
-      }, 2500);
-    }
+      });
+    });
+    observer.observe(video);
+
+    console.log('🎬 Video force-play enabled for mobile');
   })();
 
   // ============================================================
@@ -2342,6 +2382,7 @@
 
   console.log('🚀 MESH — Premium Card Swipe + Thread in Typography! ✨');
   console.log('💎 Glassmorphism · Dot Indicators · Smooth Drag');
+  console.log('🎬 Video force-play enabled for mobile');
 </script>
 </body>
 </html>
