@@ -297,7 +297,7 @@
       object-fit: cover;
       display: none;
       opacity: 0;
-      transition: opacity 1.2s ease;
+      transition: opacity 0.5s ease;
       mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
       -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
     }
@@ -1323,7 +1323,7 @@
 <!-- ============================================================ -->
 <nav id="nav">
   <div class="logo-mark">
-    <img src="logo.png" alt="MESH Logo" />
+    <img src="meshbg.png" alt="MESH Logo" />
   </div>
   <a href="https://wa.me/919778423214?text=Hey%20MESH!%20Count%20me%20in." target="_blank" rel="noopener noreferrer" class="nav-cta">Join</a>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -1820,62 +1820,41 @@
   })();
 
   // ============================================================
-  // 2. VIDEO — FORCE PLAY ON MOBILE (FIXED)
+  // 2. VIDEO — IMMEDIATE AUTOPLAY (FIXED)
   // ============================================================
   (function() {
     const video = document.getElementById('heroVideo');
     if (!video) return;
 
-    // Set initial state
-    video.style.opacity = '0';
-    
-    // When video can play, show it
-    video.addEventListener('canplaythrough', function() {
-      this.classList.add('ready');
-      this.style.opacity = '0.6';
-      this.play().catch(() => {});
-      console.log('🎬 Video ready and playing');
-    });
+    // Show video immediately
+    video.style.opacity = '0.6';
+    video.classList.add('ready');
 
-    // Fallback: show after 3s even if not ready
-    setTimeout(function() {
-      if (!video.classList.contains('ready')) {
-        video.classList.add('ready');
-        video.style.opacity = '0.6';
-        video.play().catch(() => {});
-        console.log('🎬 Video fallback triggered');
+    // Attempt to play immediately
+    video.play().catch(() => {});
+
+    // Retry every 300ms until it plays (max 10 attempts)
+    let attempts = 0;
+    const maxAttempts = 10;
+    const retryInterval = setInterval(() => {
+      attempts++;
+      if (attempts >= maxAttempts) {
+        clearInterval(retryInterval);
+        return;
       }
-    }, 3000);
-
-    // FORCE PLAY ON ANY USER INTERACTION
-    function forcePlay() {
       video.play().catch(() => {});
-    }
-    
-    // Mobile touch events
-    document.addEventListener('touchstart', forcePlay, { passive: true });
-    document.addEventListener('click', forcePlay, { passive: true });
-    
-    // Also try on scroll (first scroll only)
-    let scrollTried = false;
-    window.addEventListener('scroll', function() {
-      if (!scrollTried) {
-        scrollTried = true;
-        video.play().catch(() => {});
-      }
-    }, { passive: true, once: true });
+    }, 300);
 
-    // Intersection Observer — play when visible
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-        }
-      });
-    });
-    observer.observe(video);
+    // Fallback: play on first user interaction if all else fails
+    const forcePlay = () => {
+      video.play().catch(() => {});
+      document.removeEventListener('touchstart', forcePlay);
+      document.removeEventListener('click', forcePlay);
+    };
+    document.addEventListener('touchstart', forcePlay, { once: true });
+    document.addEventListener('click', forcePlay, { once: true });
 
-    console.log('🎬 Video force-play enabled for mobile');
+    console.log('🎬 Video autoplay with retry enabled');
   })();
 
   // ============================================================
@@ -2382,9 +2361,7 @@
 
   console.log('🚀 MESH — Premium Card Swipe + Thread in Typography! ✨');
   console.log('💎 Glassmorphism · Dot Indicators · Smooth Drag');
-  console.log('🎬 Video force-play enabled for mobile');
+  console.log('🎬 Video autoplay with retry enabled');
 </script>
 </body>
 </html>
-
-<!-- This is an HTML comment -->
